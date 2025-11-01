@@ -179,12 +179,13 @@
       {id:"T027",station:"ED",zone:"Marketing & Communications",name:"Michail Kaloeidas"}
     ];
 
-    function normalizeZone(z){
-      return (z||"Blank")
+    function normalizeZone(z) {
+      return (z || "Blank")
         .toLowerCase()
-        .normalize('NFD').replace(/[̀-ͯ]/g,'')
-        .replace(/&/g,'and')
-        .replace(/[^a-z0-9]+/g,'')
+        .normalize('NFD')
+        .replace(/[\\u0300-\\u036f]/g, '')
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9]+/g, '')
         .trim();
     }
 
@@ -196,53 +197,42 @@
       const mapImg = document.getElementById('zoneMap');
 
       if (!input) {
-        card.innerHTML = "Enter an Employee ID.";
-        card.className = "card error";
-        card.style.display = "block";
-        mapContainer.style.display = "none";
+        card.innerHTML = \"Enter an Employee ID.\";
+        card.className = \"card error\";
+        card.style.display = \"block\";
+        mapContainer.style.display = \"none\";
         return;
       }
 
       const emp = employees.find(e => String(e.id).toUpperCase() === input);
 
       if (!emp) {
-        card.innerHTML = "Employee ID not found. Please contact IT Support.";
-        card.className = "card error";
-        card.style.display = "block";
-        mapContainer.style.display = "none";
+        card.innerHTML = \"Employee ID not found. Please contact IT Support.\";
+        card.className = \"card error\";
+        card.style.display = \"block\";
+        mapContainer.style.display = \"none\";
         return;
       }
 
-      const zone = emp.zone && emp.zone.trim() ? emp.zone : "Blank";
-      const station = emp.station && emp.station.trim() ? emp.station : "Blank";
+      const zone = emp.zone && emp.zone.trim() ? emp.zone : \"Blank\";
+      const station = emp.station && emp.station.trim() ? emp.station : \"Blank\";
 
-      card.className = "card";
+      card.className = \"card\";
       card.innerHTML = `Welcome <strong>${emp.name}</strong><br>Your Zone is <strong>${zone}</strong><br>Your Station number is <strong>${station}</strong>`;
-      card.style.display = "block";
+      card.style.display = \"block\";
 
       const zoneFile = normalizeZone(zone);
       const imgPath = `${zoneFile || 'blank'}.jpg`;
       mapImg.src = imgPath;
-      mapContainer.style.display = "block";
+      mapContainer.style.display = \"block\";
     }
 
-    // Support Enter key
     document.addEventListener('DOMContentLoaded', () => {
       const input = document.getElementById('idInput');
       input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') { findEmployee(); }
+        if (e.key === 'Enter') findEmployee();
       });
     });
-
-      card.className = "card";
-      card.innerHTML = `Welcome <strong>${emp.name}</strong><br>Your Zone is <strong>${emp.zone}</strong><br>Your Station number is <strong>${emp.station}</strong>`;
-      card.style.display = "block";
-
-      const zoneFile = emp.zone.toLowerCase().replace(/ & |\s+/g, '').replace('&','');
-      const imgPath = `${zoneFile || 'blank'}.jpg`;
-      mapImg.src = imgPath;
-      mapContainer.style.display = "block";
-    }
   </script>
 </body>
 </html>
