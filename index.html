@@ -25,9 +25,10 @@
     input {
       padding: 10px;
       font-size: 16px;
-      width: 120px;
+      width: 140px;
       border: 1px solid #c6a15b;
       border-radius: 5px;
+      text-transform: uppercase;
     }
     button {
       padding: 10px 20px;
@@ -39,53 +40,170 @@
       cursor: pointer;
     }
     button:hover { background-color: #b28f4f; }
-    #result {
-      margin-top: 20px;
-      font-size: 20px;
-      color: #0d2e1e;
-      font-weight: bold;
+    .card {
+      display: none;
+      margin: 25px auto;
+      border: 2px solid #c6a15b;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 500px;
+      padding: 20px;
+      background: #fffaf0;
+      font-size: 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
+    .card.error { border-color: #c00; color: #c00; background: #ffecec; }
     .map-container {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
+      margin-top: 25px;
+      display: none;
     }
     .map-container img {
       width: 80%;
       max-width: 900px;
       border: 2px solid #c6a15b;
       border-radius: 8px;
-      cursor: zoom-in;
-      transition: transform 0.2s ease;
     }
-    .map-container img.zoomed { transform: scale(1.8); cursor: zoom-out; }
   </style>
 </head>
 <body>
   <header>Asian Cup 2027 – New Office Seat Finder</header>
   <div class="container">
-    <p>Enter your Employee ID to view your assigned seat number:</p>
-    <input type="number" id="idInput" min="1" max="25" placeholder="1–25">
-    <button onclick="showSeat()">Find</button>
-    <div id="result"></div>
-    <div class="map-container">
-      <img id="officeMap" src="building-plan.jpg" alt="Office Map">
+    <p>Enter your Employee ID to view your assigned zone and station:</p>
+    <input type="text" id="idInput" placeholder="e.g. 18 or T003">
+    <button onclick="findEmployee()">Find</button>
+
+    <div id="resultCard" class="card"></div>
+    <div class="map-container" id="mapContainer">
+      <img id="zoneMap" src="" alt="Zone Map">
     </div>
   </div>
 
   <script>
-    function showSeat() {
-      const id = parseInt(document.getElementById('idInput').value);
-      if (isNaN(id) || id < 1 || id > 25) {
-        document.getElementById('result').innerText = 'Enter a number between 1 and 25';
+    const employees = [
+      {id:"2",station:"ED",zone:"HR & FM",name:"Bedour Abdulkareem Alsuleiman"},
+      {id:"3",station:"220",zone:"HR & FM",name:"Mohammed Abdullah Aldawsari"},
+      {id:"4",station:"221",zone:"HR & FM",name:"Muath Abdullah Alqarzaai"},
+      {id:"5",station:"222",zone:"HR & FM",name:"Abdulrhman Mohammed Alaskar"},
+      {id:"6",station:"ED",zone:"Finance",name:"Saad Mohammed Alsulaiman"},
+      {id:"7",station:"22",zone:"Operations",name:"Mohammed Yahya Madkhaly"},
+      {id:"8",station:"049",zone:"Operations",name:"Fazza Mohammed Alqahtani"},
+      {id:"9",station:"201",zone:"HR & FM",name:"Khaled Mohammed Albalawi"},
+      {id:"10",station:"ED",zone:"Procurement",name:"Sultan Ibrahim Alaboud"},
+      {id:"11",station:"Blank",zone:"Blank",name:"Noura Faisal Musaad Al-Sudairy"},
+      {id:"13",station:"223",zone:"HR & FM",name:"Ahmed Ibrahim Aldughaylibi"},
+      {id:"14",station:"Blank",zone:"Blank",name:"Ahmed Musaad Alosaymi"},
+      {id:"15",station:"Blank",zone:"Blank",name:"Yazeed Fahad Alrasheed"},
+      {id:"16",station:"Blank",zone:"Blank",name:"Fahad Mohammed Nafea"},
+      {id:"17",station:"Blank",zone:"Blank",name:"Mazen Hassan Aljari"},
+      {id:"18",station:"200",zone:"Marketing & Communications",name:"Salman Sameer Alsabban"},
+      {id:"19",station:"172",zone:"Marketing & Communications",name:"Mashael Abdullah Alaskar"},
+      {id:"21",station:"171",zone:"Marketing & Communications",name:"Munirah Salman Al Muhsin"},
+      {id:"22",station:"173",zone:"Marketing & Communications",name:"Alanoud Abdulrahman Al Alshaikh"},
+      {id:"23",station:"196",zone:"Marketing & Communications",name:"Emtinan Mohammed Aldagishem"},
+      {id:"24",station:"193",zone:"Marketing & Communications",name:"Noura Ghassab Bin Mandeel"},
+      {id:"25",station:"189",zone:"Marketing & Communications",name:"Norah Abdulaziz Aldeghaither"},
+      {id:"26",station:"095",zone:"Operations",name:"Hammam Baker Baghdadi"},
+      {id:"27",station:"195",zone:"Marketing & Communications",name:"Rana Ahmed Faqihi"},
+      {id:"28",station:"216",zone:"HR & FM",name:"Bader Suliman Alakkash"},
+      {id:"29",station:"Blank",zone:"Blank",name:"Rafeef Ibrahim Kabbani"},
+      {id:"31",station:"219",zone:"HR & FM",name:"Amjad Zaid Aldurayhim"},
+      {id:"33",station:"250",zone:"Finance",name:"Abdulaziz Essa Alshathri"},
+      {id:"35",station:"Blank",zone:"Commercial",name:"Khalid Saeed Khabti"},
+      {id:"36",station:"Blank",zone:"Blank",name:"Mohannad Sameer Almotadaris"},
+      {id:"37",station:"292",zone:"Procurement",name:"Abdulaziz Khalid Alzaaqi"},
+      {id:"39",station:"202",zone:"HR & FM",name:"Mohannad Kamil Jalal"},
+      {id:"41",station:"235",zone:"Legal",name:"Ghaliah Saad Almulhim"},
+      {id:"43",station:"274",zone:"Procurement",name:"Malak Mubarak Alkabour"},
+      {id:"45",station:"263",zone:"Finance",name:"Omar Emadidean Alfarra"},
+      {id:"46",station:"273",zone:"Finance",name:"Wgdan Faisal Bakur"},
+      {id:"48",station:"267",zone:"Finance",name:"Ahmed Hamoud Allahim"},
+      {id:"49",station:"080",zone:"Operations",name:"Sultan Thawab Algouaied"},
+      {id:"50",station:"246",zone:"Legal",name:"Yousif Abdulkareem Almutawa"},
+      {id:"52",station:"166",zone:"Commercial",name:"Feras Mohammednajeeb Sabano"},
+      {id:"53",station:"165",zone:"Commercial",name:"Ziyad Ayman Bajnaid"},
+      {id:"54",station:"066",zone:"Operations",name:"Luay Turki Qindil"},
+      {id:"55",station:"Blank",zone:"Blank",name:"Abdulaziz Saleh Alharbi"},
+      {id:"56",station:"058",zone:"Operations",name:"Mohammed Ali Alrasheed"},
+      {id:"57",station:"010",zone:"Operations",name:"Abdullah Ahmed Fallatah"},
+      {id:"58",station:"218",zone:"HR & FM",name:"Ahmad Sultan Almusa"},
+      {id:"59",station:"061",zone:"Operations",name:"Abdullah Ahmed Adrees Flatah"},
+      {id:"60",station:"11",zone:"Operations",name:"Ahmed Abdulrahman Fallatah"},
+      {id:"61",station:"048",zone:"Operations",name:"Alaa Refah Basarwan"},
+      {id:"62",station:"009",zone:"Operations",name:"Mohammed Ahmed Asiri"},
+      {id:"63",station:"044",zone:"Operations",name:"Mai Khalid Sabr"},
+      {id:"64",station:"Blank",zone:"Blank",name:"Abdulrahman Abdulaziz Alsedrah"},
+      {id:"65",station:"093",zone:"Operations",name:"Asim Abdulrahim Almarghalami"},
+      {id:"67",station:"104",zone:"Planning",name:"Saud Ahmed Madani"},
+      {id:"68",station:"008",zone:"Operations",name:"Abdulaziz Saad Alomran"},
+      {id:"70",station:"046",zone:"Operations",name:"Nouf Nawaf Alsaud"},
+      {id:"71",station:"161",zone:"Commercial",name:"Alghaida Abdulhakim Aljuraisy"},
+      {id:"72",station:"057",zone:"Operations",name:"Khalid Yaslam Alnahdi"},
+      {id:"75",station:"217",zone:"HR & FM",name:"Abdullah Azam Alhumoudi"},
+      {id:"76",station:"084",zone:"Operations",name:"Abdulmohsen Abdullah Alduwayrij"},
+      {id:"77",station:"059",zone:"Operations",name:"Tareq Mohammed Hakami"},
+      {id:"78",station:"131",zone:"Planning",name:"Ammar Adnan Sulaimani"},
+      {id:"79",station:"198",zone:"Marketing & Communications",name:"Mohammed Abdullah Alqahtani"},
+      {id:"80",station:"174",zone:"Marketing & Communications",name:"Abdulrahman Meshari Alangari"},
+      {id:"81",station:"215",zone:"HR & FM",name:"Noura Fahad Alathel"},
+      {id:"82",station:"045",zone:"Operations",name:"Khaled Saleh Alhosaini"},
+      {id:"83",station:"007",zone:"Operations",name:"Abdulaziz Muflih Alqahtani"},
+      {id:"84",station:"092",zone:"Operations",name:"Samer Abdulaziz Bwsha"},
+      {id:"85",station:"276",zone:"Procurement",name:"Hadeel Saud Alonayz"},
+      {id:"86",station:"197",zone:"Marketing & Communications",name:"Abdulaziz Ahmed Bin Buhayr"},
+      {id:"T001",station:"ED",zone:"Operations",name:"Peter Hugg"},
+      {id:"T002",station:"ED",zone:"Operations",name:"Nikita Minchenko"},
+      {id:"T003",station:"043",zone:"Operations",name:"Konstantin Bortnichek"},
+      {id:"T004",station:"039",zone:"Operations",name:"Adam Burrows"},
+      {id:"T005",station:"14",zone:"Operations",name:"Anton Bakeeb Bakeev"},
+      {id:"T006",station:"065",zone:"Operations",name:"Uladzimir Mazgou"},
+      {id:"T007",station:"152",zone:"Commercial",name:"Taufique Ahmed"},
+      {id:"T008",station:"090",zone:"Operations",name:"Maksim Kapmokob Karmokov"},
+      {id:"T009",station:"042",zone:"Operations",name:"John Ioannis Jossifakis"},
+      {id:"T010",station:"096",zone:"Operations",name:"Natig Guliyev"},
+      {id:"T011",station:"204",zone:"HR & FM",name:"Atif Gambarov"},
+      {id:"T012",station:"056",zone:"Operations",name:"Nurlan Baghirov"},
+      {id:"T013",station:"005",zone:"Operations",name:"Yiannis Ntzoufras"},
+      {id:"T014",station:"091",zone:"Operations",name:"Elman Mikayilov"},
+      {id:"T015",station:"062",zone:"Operations",name:"Elmar Piriyev"},
+      {id:"T016",station:"037",zone:"Operations",name:"Maria Dutikova"},
+      {id:"T017",station:"079",zone:"Operations",name:"Mauricio Goncalves"},
+      {id:"T018",station:"070",zone:"Operations",name:"Mariana Quintanilla"},
+      {id:"T019",station:"248",zone:"Legal",name:"Giandonato Marino"},
+      {id:"T020",station:"081",zone:"Operations",name:"Javid Gambarov"},
+      {id:"T021",station:"082",zone:"Operations",name:"Flora Russo"},
+      {id:"T022",station:"083",zone:"Operations",name:"Mohammad Almatalqah"},
+      {id:"T023",station:"077",zone:"Operations",name:"Joanna Dizios"},
+      {id:"T024",station:"072",zone:"Operations",name:"Camila Montanha"},
+      {id:"T025",station:"078",zone:"Operations",name:"Tim Tuomey"},
+      {id:"T026",station:"063",zone:"Operations",name:"Emmanuel Egbuobi"},
+      {id:"T027",station:"ED",zone:"Marketing & Communications",name:"Michail Kaloeidas"}
+    ];
+
+    function findEmployee() {
+      const input = document.getElementById('idInput').value.trim().toUpperCase();
+      const card = document.getElementById('resultCard');
+      const mapContainer = document.getElementById('mapContainer');
+      const mapImg = document.getElementById('zoneMap');
+
+      const emp = employees.find(e => e.id.toUpperCase() === input);
+
+      if (!emp) {
+        card.innerHTML = \"Employee ID not found. Please contact IT Support.\";
+        card.className = \"card error\";
+        card.style.display = \"block\";
+        mapContainer.style.display = \"none\";
         return;
       }
-      const seat = 26 - id;
-      document.getElementById('result').innerText = `Your seat number is: ${seat}`;
-    }
 
-    const map = document.getElementById('officeMap');
-    map.addEventListener('click', () => map.classList.toggle('zoomed'));
+      card.className = \"card\";
+      card.innerHTML = `Welcome <strong>${emp.name}</strong><br>Your Zone is <strong>${emp.zone}</strong><br>Your Station number is <strong>${emp.station}</strong>`;
+      card.style.display = \"block\";
+
+      const zoneFile = emp.zone.toLowerCase().replace(/ & |\\s+/g, '').replace('&','');
+      const imgPath = `images/${zoneFile || 'blank'}.jpg`;
+      mapImg.src = imgPath;
+      mapContainer.style.display = \"block\";
+    }
   </script>
 </body>
 </html>
