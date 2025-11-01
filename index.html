@@ -1,106 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asian Cup 2027 – New Office</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #ffffff;
-      color: #0d2e1e;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #0d2e1e;
-      color: #ffffff;
-      padding: 20px 0;
-      font-size: 24px;
-      font-weight: 600;
-    }
-    .container { margin-top: 40px; }
-    input {
-      padding: 10px;
-      font-size: 16px;
-      width: 140px;
-      border: 1px solid #c6a15b;
-      border-radius: 5px;
-      text-transform: uppercase;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #c6a15b;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover { background-color: #b28f4f; }
-    .card {
-      display: none;
-      margin: 25px auto;
-      border: 2px solid #c6a15b;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 500px;
-      padding: 20px;
-      background: #fffaf0;
-      font-size: 18px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .card.error { border-color: #c00; color: #c00; background: #ffecec; }
-  </style>
-</head>
-<body>
-  <header>Asian Cup 2027 – New Office Seat Finder</header>
-  <div class="container">
-    <p>Enter your Employee ID to view your assigned zone and station:</p>
-    <input type="text" id="idInput" placeholder="e.g. 18 or T003">
-    <button onclick="findEmployee()">Find</button>
+<script>
+  const employees = [
+    {id:"2",station:"ED",zone:"HR & FM",name:"Bedour Abdulkareem Alsuleiman"},
+    {id:"T005",station:"14",zone:"Operations",name:"Anton Bakeeb Bakeev"}
+    // (rest of list)
+  ];
 
-    <div id="resultCard" class="card"></div>
-  </div>
-
-  <script>
-    const employees = [
-      {id:"2",station:"ED",zone:"HR & FM",name:"Bedour Abdulkareem Alsuleiman"},
-      {id:"3",station:"220",zone:"HR & FM",name:"Mohammed Abdullah Aldawsari"},
-      {id:"4",station:"221",zone:"HR & FM",name:"Muath Abdullah Alqarzaai"},
-      {id:"T005",station:"14",zone:"Operations",name:"Anton Bakeeb Bakeev"}
-      // ... (you can paste the rest later)
-    ];
-
-    function findEmployee() {
-      const inputRaw = document.getElementById('idInput').value;
-      const input = inputRaw.trim().toUpperCase();
-      const card = document.getElementById('resultCard');
-
-      if (!input) {
-        card.innerHTML = "Enter an Employee ID.";
-        card.className = "card error";
-        card.style.display = "block";
-        return;
-      }
-
-      const emp = employees.find(e => String(e.id).toUpperCase() === input);
-
-      if (!emp) {
-        card.innerHTML = "Employee ID not found. Please contact IT Support.";
-        card.className = "card error";
-        card.style.display = "block";
-        return;
-      }
-
-      const zone = emp.zone && emp.zone.trim() ? emp.zone : "Blank";
-      const station = emp.station && emp.station.trim() ? emp.station : "Blank";
-
-      card.className = "card";
-      card.innerHTML = `Welcome <strong>${emp.name}</strong><br>Your Zone is <strong>${zone}</strong><br>Your Station number is <strong>${station}</strong>`;
+  function findEmployee() {
+    const input = document.getElementById('idInput').value.trim().toUpperCase();
+    const card = document.getElementById('resultCard');
+    if (!input) {
+      card.innerHTML = "Enter an Employee ID.";
+      card.className = "card error";
       card.style.display = "block";
+      return;
     }
+    const emp = employees.find(e => e.id.toUpperCase() === input);
+    if (!emp) {
+      card.innerHTML = "Employee ID not found. Please contact IT Support.";
+      card.className = "card error";
+      card.style.display = "block";
+      return;
+    }
+    card.className = "card";
+    card.innerHTML = `Welcome <strong>${emp.name}</strong><br>Your Zone is <strong>${emp.zone}</strong><br>Your Station number is <strong>${emp.station}</strong>`;
+    card.style.display = "block";
+  }
 
-    doc
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('idInput');
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') findEmployee();
+    });
+  });
+</script>
