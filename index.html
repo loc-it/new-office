@@ -6,16 +6,16 @@
   <title>Asian Cup 2027 – New Office</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <style>
-    body {font-family:'Segoe UI',Arial,sans-serif;background:#fff;color:#0d2e1e;text-align:center;margin:0}
-    header {background:#0d2e1e;color:#fff;padding:20px 0;font-size:24px;font-weight:600}
-    .container {margin:40px auto;max-width:960px;padding:0 16px}
-    input {padding:10px;font-size:16px;width:240px;border:1px solid #c6a15b;border-radius:5px}
-    button {padding:10px 20px;font-size:16px;background:#c6a15b;color:#fff;border:0;border-radius:5px;cursor:pointer}
-    button:hover {background:#b28f4f}
-    .card {display:none;margin:25px auto;border:2px solid #c6a15b;border-radius:8px;width:100%;max-width:560px;padding:20px;background:#fffaf0;font-size:18px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
-    .card.error {border-color:#c00;color:#c00;background:#ffecec}
-    .map {display:none;margin-top:25px}
-    .map img {width:90%;max-width:900px;border:2px solid #c6a15b;border-radius:8px}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;color:#0d2e1e;text-align:center;margin:0}
+    header{background:#0d2e1e;color:#fff;padding:20px 0;font-size:24px;font-weight:600}
+    .container{margin:40px auto;max-width:960px;padding:0 16px}
+    input{padding:10px;font-size:16px;width:260px;border:1px solid #c6a15b;border-radius:5px}
+    button{padding:10px 20px;font-size:16px;background:#c6a15b;color:#fff;border:0;border-radius:5px;cursor:pointer}
+    button:hover{background:#b28f4f}
+    .card{display:none;margin:25px auto;border:2px solid #c6a15b;border-radius:8px;width:100%;max-width:640px;padding:20px;background:#fffaf0;font-size:18px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+    .card.error{border-color:#c00;color:#c00;background:#ffecec}
+    .map{display:none;margin-top:25px}
+    .map img{width:90%;max-width:900px;border:2px solid #c6a15b;border-radius:8px}
   </style>
 </head>
 <body>
@@ -29,102 +29,157 @@
   </div>
 
   <script>
+    // ===== Employees WITH usernames (from your latest list) =====
     const withId = [
-      {id:"1",username:"malhelabi",station:"CEO's Office",zone:"CEO's Office",name:"Mai A. Alhelabi"},
-      {id:"2",username:"basuleiman",station:"ED",zone:"HR & FM",name:"Bedour Abdulkareem Alsuleiman"},
-      {id:"3",username:"madawsari",station:"220",zone:"HR & FM",name:"Mohammed Abdullah Aldawsari"},
-      {id:"4",username:"maqarzaai",station:"221",zone:"HR & FM",name:"Muath Abdullah Alqarzaai"},
-      {id:"5",username:"amaskar",station:"222",zone:"HR & FM",name:"Abdulrhman Mohammed Alaskar"},
-      {id:"6",username:"smsulaiman",station:"ED",zone:"Finance",name:"Saad Mohammed Alsulaiman"},
-      {id:"7",username:"mymadkhli",station:"22",zone:"Operations",name:"Mohammed Yahya Madkhali"},
-      {id:"8",username:"fmqahtani",station:"049",zone:"Operations",name:"Fazza Mohammed Alqahtani"},
-      {id:"9",username:"kmbalawi",station:"201",zone:"HR & FM",name:"Khaled Mohammed Albalawi"},
-      {id:"10",username:"siaboud",station:"ED",zone:"Procurement",name:"Sultan Ibrahim Alaboud"},
-      {id:"11",username:"nfsudairi",station:"CEO's Office",zone:"CEO's Office",name:"Noura Faisal Musaad Al-Sudairy"},
-      {id:"13",username:"aidughaylibi",station:"223",zone:"HR & FM",name:"Ahmed Ibrahim Aldughaylibi"},
-      {id:"14",username:"amosaymi",station:"Chief's Office",zone:"Legal",name:"Ahmed Musaad Alosaymi"},
-      {id:"15",username:"yfrasheed",station:"Chief's Office",zone:"Marketing & Communications",name:"Yazeed Fahad Alrasheed"},
-      {id:"16",username:"fmnafea",station:"ED",zone:"Operations",name:"Fahad Mohammed Nafea"},
-      {id:"17",username:"mhjari",station:"Chief's Office",zone:"Operations",name:"Mazen Hassan Aljari"},
-      {id:"18",username:"sssabban",station:"200",zone:"Marketing & Communications",name:"Salman Sameer Alsabban"},
-      {id:"19",username:"maaskar",station:"172",zone:"Marketing & Communications",name:"Mashael Abdullah Alaskar"},
-      {id:"21",username:"msmohsen",station:"171",zone:"Marketing & Communications",name:"Munirah Salman Al Muhsin"},
-      {id:"22",username:"aashaikh",station:"173",zone:"Marketing & Communications",name:"Alanoud Abdulrahman Al Alshaikh"},
-      {id:"23",username:"emdagishem",station:"196",zone:"Marketing & Communications",name:"Emtinan Mohammed Aldagishem"},
-      {id:"24",username:"ngbinmandil",station:"193",zone:"Marketing & Communications",name:"Noura Ghassab Bin Mandeel"},
-      {id:"25",username:"nadugaither",station:"189",zone:"Marketing & Communications",name:"Norah Abdulaziz Aldeghaither"},
-      {id:"26",username:"hbbaghdadi",station:"095",zone:"Operations",name:"Hammam Baker Baghdadi"},
-      {id:"27",username:"rafaqihi",station:"195",zone:"Marketing & Communications",name:"Rana Ahmed Faqihi"},
-      {id:"28",username:"bsakkash",station:"216",zone:"HR & FM",name:"Bader Suliman Alakkash"},
-      {id:"31",username:"azdurayhim",station:"219",zone:"HR & FM",name:"Amjad Zaid Aldurayhim"},
-      {id:"33",username:"aeshathri",station:"250",zone:"Finance",name:"Abdulaziz Essa Alshathri"},
-      {id:"35",username:"kskhabti",station:"Chief's Office",zone:"Commercial",name:"Khalid Saeed Khabti"},
-      {id:"36",username:"msmotadaris",station:"IT Lab",zone:"IT Lab",name:"Mohannad Sameer Almotadaris"},
-      {id:"37",username:"akzaaqi",station:"292",zone:"Procurement",name:"Abdulaziz Khalid Alzaaqi"},
-      {id:"39",username:"mkjalal",station:"202",zone:"HR & FM",name:"Mohannad Kamil Jalal"},
-      {id:"41",username:"gsmulhim",station:"235",zone:"Legal",name:"Ghaliah Saad Almulhim"},
-      {id:"43",username:"mmkabour",station:"274",zone:"Procurement",name:"Malak Mubarak Alkabour"},
-      {id:"45",username:"oealfarra",station:"263",zone:"Finance",name:"Omar Emadidean Alfarra"},
-      {id:"46",username:"wfbakur",station:"273",zone:"Finance",name:"Wgdan Faisal Bakur"},
-      {id:"48",username:"ahallahim",station:"267",zone:"Finance",name:"Ahmed Hamoud Allahim"},
-      {id:"49",username:"stalgouaied",station:"080",zone:"Operations",name:"Sultan Thawab Algouaied"},
-      {id:"50",username:"yaalmutawa",station:"246",zone:"Legal",name:"Yousif Abdulkareem Almutawa"},
-      {id:"52",username:"fmsabano",station:"166",zone:"Commercial",name:"Feras Mohammed Najeeb Sabano"},
-      {id:"53",username:"zabajnaid",station:"165",zone:"Commercial",name:"Ziyad Ayman Bajnaid"},
-      {id:"54",username:"ltqindil",station:"066",zone:"Operations",name:"Luay Turki Qindil"},
-      {id:"56",username:"maalrasheed",station:"058",zone:"Operations",name:"Mohammed Ali Alrasheed"},
-      {id:"57",username:"aafallatah",station:"010",zone:"Operations",name:"Abdullah A. Ibrahim Fallatah"},
-      {id:"58",username:"asalmusa",station:"218",zone:"HR & FM",name:"Ahmad Sultan Almusa"},
-      {id:"59",username:"aaflatah",station:"061",zone:"Operations",name:"Abdullah A. Adrees Flatah"},
-      {id:"60",username:"afallatah",station:"11",zone:"Operations",name:"Ahmed Abdulrahman Fallatah"},
-      {id:"61",username:"arbasarwan",station:"048",zone:"Operations",name:"Alaa Refah Basarwan"},
-      {id:"62",username:"maasiri",station:"009",zone:"Operations",name:"Mohammed Ahmed Asiri"},
-      {id:"63",username:"mksabr",station:"044",zone:"Operations",name:"Mai Khalid Sabr"},
-      {id:"65",username:"aaalmarghalani",station:"093",zone:"Operations",name:"Asim Abdulrahim Almarghalani"},
-      {id:"67",username:"samadani",station:"104",zone:"Planning",name:"Saud Ahmed Madani"},
-      {id:"68",username:"asalomran",station:"008",zone:"Operations",name:"Abdulaziz Saad Alomran"},
-      {id:"70",username:"nnalsaud",station:"046",zone:"Operations",name:"Nouf Nawaf Alsaud"},
-      {id:"71",username:"aaaljuraisy",station:"161",zone:"Commercial",name:"Alghaida Abdulhakim Aljuraisy"},
-      {id:"72",username:"kyalnahdi",station:"057",zone:"Operations",name:"Khalid Yaslam Alnahdi"},
-      {id:"75",username:"aaalhumoudi",station:"217",zone:"HR & FM",name:"Abdullah Azam Alhumoudi"},
-      {id:"76",username:"aaaldowerj",station:"084",zone:"Operations",name:"Abdulmohsen Abdullah Aldowerj"},
-      {id:"77",username:"tmhakami",station:"059",zone:"Operations",name:"Tareq Mohammed Hakami"},
-      {id:"78",username:"aasulaimani",station:"131",zone:"Planning",name:"Ammar Adnan Sulaimani"},
-      {id:"79",username:"maalqahtani",station:"198",zone:"Marketing & Communications",name:"Mohammed Abdullah Alqahtani"},
-      {id:"80",username:"amalangari",station:"174",zone:"Marketing & Communications",name:"Abdulrahman Meshari Alangari"},
-      {id:"81",username:"nfalathel",station:"215",zone:"HR & FM",name:"Noura Fahad Alathel"},
-      {id:"82",username:"ksalhosaini",station:"045",zone:"Operations",name:"Khaled Saleh Alhosaini"},
-      {id:"83",username:"amalqahtani",station:"007",zone:"Operations",name:"Abdulaziz Muflih Alqahtani"},
-      {id:"84",username:"sabwsha",station:"092",zone:"Operations",name:"Samer Abdulaziz Bwsha"},
-      {id:"85",username:"hsalonayz",station:"276",zone:"Procurement",name:"Hadeel Saud Alonayz"},
-      {id:"86",username:"aabinbuhayr",station:"197",zone:"Marketing & Communications",name:"Abdulaziz Ahmed Bin buhayr"},
-      {id:"T005",username:"aabakeev",station:"14",zone:"Operations",name:"Anton Bakeeb Bakeev"}
+      {id:"1", username:"malhelabi",   station:"CEO's Office", zone:"CEO's Office", name:"Mai A. Alhelabi"},
+      {id:"2", username:"basuleiman",  station:"ED",           zone:"HR & FM", name:"Bedour Abdulkareem Alsuleiman"},
+      {id:"3", username:"madawsari",   station:"220",          zone:"HR & FM", name:"Mohammed Abdullah Aldawsari"},
+      {id:"4", username:"maqarzaai",   station:"221",          zone:"HR & FM", name:"Muath Abdullah Alqarzaai"},
+      {id:"5", username:"amaskar",     station:"222",          zone:"HR & FM", name:"Abdulrhman Mohammed Alaskar"},
+      {id:"6", username:"smsulaiman",  station:"ED",           zone:"Finance", name:"Saad Mohammed Alsulaiman"},
+      {id:"7", username:"mymadkhli",   station:"22",           zone:"Operations", name:"Mohammed Yahya Madkhali"},
+      {id:"8", username:"fmqahtani",   station:"049",          zone:"Operations", name:"Fazza Mohammed Alqahtani"},
+      {id:"9", username:"kmbalawi",    station:"201",          zone:"HR & FM", name:"Khaled Mohammed Albalawi"},
+      {id:"10",username:"siaboud",     station:"ED",           zone:"Procurement", name:"Sultan Ibrahim Alaboud"},
+      {id:"11",username:"nfsudairi",   station:"CEO's Office", zone:"CEO's Office", name:"Noura Faisal Musaad Al-Sudairy"},
+      {id:"13",username:"aidughaylibi",station:"223",          zone:"HR & FM", name:"Ahmed Ibrahim Aldughaylibi"},
+      {id:"14",username:"amosaymi",    station:"Chief's Office",zone:"Legal", name:"Ahmed Musaad Alosaymi"},
+      {id:"15",username:"yfrasheed",   station:"Chief's Office",zone:"Marketing & Communications", name:"Yazeed Fahad Alrasheed"},
+      {id:"16",username:"fmnafea",     station:"ED",           zone:"Operations", name:"Fahad Mohammed Nafea"},
+      {id:"17",username:"mhjari",      station:"Chief's Office",zone:"Operations", name:"Mazen Hassan Aljari"},
+      {id:"18",username:"sssabban",    station:"200",          zone:"Marketing & Communications", name:"Salman Sameer Alsabban"},
+      {id:"19",username:"maaskar",     station:"172",          zone:"Marketing & Communications", name:"Mashael Abdullah Alaskar"},
+      {id:"21",username:"msmohsen",    station:"171",          zone:"Marketing & Communications", name:"Munirah Salman Al Muhsin"},
+      {id:"22",username:"aashaikh",    station:"173",          zone:"Marketing & Communications", name:"Alanoud Abdulrahman Al Alshaikh"},
+      {id:"23",username:"emdagishem",  station:"196",          zone:"Marketing & Communications", name:"Emtinan Mohammed Aldagishem"},
+      {id:"24",username:"ngbinmandil", station:"193",          zone:"Marketing & Communications", name:"Noura Ghassab Bin Mandeel"},
+      {id:"25",username:"nadugaither", station:"189",          zone:"Marketing & Communications", name:"Norah Abdulaziz Aldeghaither"},
+      {id:"26",username:"hbbaghdadi",  station:"095",          zone:"Operations", name:"Hammam Baker Baghdadi"},
+      {id:"27",username:"rafaqihi",    station:"195",          zone:"Marketing & Communications", name:"Rana Ahmed Faqihi"},
+      {id:"28",username:"bsakkash",    station:"216",          zone:"HR & FM", name:"Bader Suliman Alakkash"},
+      {id:"29",username:"rikabbani",   station:"Chief's Office",zone:"Shared Services", name:"Rafeef Ibrahim Kabbani"},
+      {id:"31",username:"azdurayhim",  station:"219",          zone:"HR & FM", name:"Amjad Zaid Aldurayhim"},
+      {id:"33",username:"aeshathri",   station:"250",          zone:"Finance", name:"Abdulaziz Essa Alshathri"},
+      {id:"35",username:"kskhabti",    station:"Chief's Office",zone:"Commercial", name:"Khalid Saeed Khabti"},
+      {id:"36",username:"msmotadaris", station:"IT Lab",       zone:"IT Lab", name:"Mohannad Sameer Almotadaris"},
+      {id:"37",username:"akzaaqi",     station:"292",          zone:"Procurement", name:"Abdulaziz Khalid Alzaaqi"},
+      {id:"39",username:"mkjalal",     station:"202",          zone:"HR & FM", name:"Mohannad Kamil Jalal"},
+      {id:"41",username:"gsmulhim",    station:"235",          zone:"Legal", name:"Ghaliah Saad Almulhim"},
+      {id:"43",username:"mmkabour",    station:"274",          zone:"Procurement", name:"Malak Mubarak Alkabour"},
+      {id:"45",username:"oealfarra",   station:"263",          zone:"Finance", name:"Omar Emadidean Alfarra"},
+      {id:"46",username:"wfbakur",     station:"273",          zone:"Finance", name:"Wgdan Faisal Bakur"},
+      {id:"47",username:"hsalshaifan", station:"Blank",        zone:"Blank", name:"Haitham Saad Alshaifan"},
+      {id:"48",username:"ahallahim",   station:"267",          zone:"Finance", name:"Ahmed Hamoud Allahim"},
+      {id:"49",username:"stalgouaied", station:"080",          zone:"Operations", name:"Sultan Thawab Algouaied"},
+      {id:"50",username:"yaalmutawa",  station:"246",          zone:"Legal", name:"Yousif Abdulkareem Almutawa"},
+      {id:"51",username:"amalghamdi",  station:"Blank",        zone:"Blank", name:"Ahmed Mohammed Alghamdi"},
+      {id:"52",username:"fmsabano",    station:"166",          zone:"Commercial", name:"Feras Mohammed Najeeb Sabano"},
+      {id:"53",username:"zabajnaid",   station:"165",          zone:"Commercial", name:"Ziyad Ayman Bajnaid"},
+      {id:"54",username:"ltqindil",    station:"066",          zone:"Operations", name:"Luay Turki Qindil"},
+      {id:"55",username:"asalharbi",   station:"Blank",        zone:"Blank", name:"Abdulaziz Saleh Alharbi"},
+      {id:"56",username:"maalrasheed", station:"058",          zone:"Operations", name:"Mohammed Ali Alrasheed"},
+      {id:"57",username:"aafallatah",  station:"010",          zone:"Operations", name:"Abdullah A. Ibrahim Fallatah"},
+      {id:"58",username:"asalmusa",    station:"218",          zone:"HR & FM", name:"Ahmad Sultan Almusa"},
+      {id:"59",username:"aaflatah",    station:"061",          zone:"Operations", name:"Abdullah A. Adrees Flatah"},
+      {id:"60",username:"afallatah",   station:"11",           zone:"Operations", name:"Ahmed Abdulrahman Fallatah"},
+      {id:"61",username:"arbasarwan",  station:"048",          zone:"Operations", name:"Alaa Refah Basarwan"},
+      {id:"62",username:"maasiri",     station:"009",          zone:"Operations", name:"Mohammed Ahmed Asiri"},
+      {id:"63",username:"mksabr",      station:"044",          zone:"Operations", name:"Mai Khalid Sabr"},
+      {id:"64",username:"aaalsedrah",  station:"Blank",        zone:"Blank", name:"Abdulrahman Abdulaziz Alsedrah"},
+      {id:"65",username:"aaalmarghalani", station:"093",       zone:"Operations", name:"Asim Abdulrahim Almarghalani"},
+      {id:"66",username:"asalrashed",  station:"Blank",        zone:"Blank", name:"Abdullah Saad Alrashed"},
+      {id:"67",username:"samadani",    station:"104",          zone:"Planning", name:"Saud Ahmed Madani"},
+      {id:"68",username:"asalomran",   station:"008",          zone:"Operations", name:"Abdulaziz Saad Alomran"},
+      {id:"69",username:"erharoon",    station:"ED",           zone:"Commercial", name:"Essam Rashad Haroon"},
+      {id:"70",username:"nnalsaud",    station:"046",          zone:"Operations", name:"Nouf Nawaf Alsaud"},
+      {id:"71",username:"aaaljuraisy", station:"161",          zone:"Commercial", name:"Alghaida Abdulhakim Aljuraisy"},
+      {id:"72",username:"kyalnahdi",   station:"057",          zone:"Operations", name:"Khalid Yaslam Alnahdi"},
+      {id:"73",username:"naalkeaid",   station:"Blank",        zone:"Blank", name:"Nawaf Adel Alkeaid"},
+      {id:"74",username:"aaaziz",      station:"Blank",        zone:"Blank", name:"Ayman Abdulmajeed Aziz"},
+      {id:"75",username:"aaalhumoudi", station:"217",          zone:"HR & FM", name:"Abdullah Azam Alhumoudi"},
+      {id:"76",username:"aaaldowerj",  station:"084",          zone:"Operations", name:"Abdulmohsen Abdullah Aldowerj"},
+      {id:"77",username:"tmhakami",    station:"059",          zone:"Operations", name:"Tareq Mohammed Hakami"},
+      {id:"78",username:"aasulaimani", station:"131",          zone:"Planning", name:"Ammar Adnan Sulaimani"},
+      {id:"79",username:"maalqahtani", station:"198",          zone:"Marketing & Communications", name:"Mohammed Abdullah Alqahtani"},
+      {id:"80",username:"amalangari",  station:"174",          zone:"Marketing & Communications", name:"Abdulrahman Meshari Alangari"},
+      {id:"81",username:"nfalathel",   station:"215",          zone:"HR & FM", name:"Noura Fahad Alathel"},
+      {id:"82",username:"ksalhosaini", station:"045",          zone:"Operations", name:"Khaled Saleh Alhosaini"},
+      {id:"83",username:"amalqahtani", station:"007",          zone:"Operations", name:"Abdulaziz Muflih Alqahtani"},
+      {id:"84",username:"sabwsha",     station:"092",          zone:"Operations", name:"Samer Abdulaziz Bwsha"},
+      {id:"85",username:"hsalonayz",   station:"276",          zone:"Procurement", name:"Hadeel Saud Alonayz"},
+      {id:"86",username:"aabinbuhayr", station:"197",          zone:"Marketing & Communications", name:"Abdulaziz Ahmed Bin buhayr"},
+
+      // T series
+      {id:"T001",username:"pjhugg",       station:"ED",  zone:"Operations", name:"Peter Hugg"},
+      {id:"T002",username:"nminchenko",   station:"ED",  zone:"Operations", name:"Nikita Minchenko"},
+      {id:"T003",username:"kbortnichek",  station:"043", zone:"Operations", name:"Konstantin Bortnichek"},
+      {id:"T004",username:"acburrows",    station:"039", zone:"Operations", name:"Adam Burrows"},
+      {id:"T005",username:"aabakeev",     station:"14",  zone:"Operations", name:"Anton Bakeeb Bakeev"},
+      {id:"T006",username:"ummazgou",     station:"065", zone:"Operations", name:"Uladzimir Mazgou"},
+      {id:"T007",username:"tahmed",       station:"152", zone:"Commercial", name:"Taufique Ahmed"},
+      {id:"T008",username:"mkkarmokov",   station:"090", zone:"Operations", name:"Maksim Kapmokob Karmokov"},
+      {id:"T009",username:"jjossifakis",  station:"042", zone:"Operations", name:"John Ioannis Jossifakis"},
+      {id:"T010",username:"nguliyev",     station:"096", zone:"Operations", name:"Natig Guliyev"},
+      {id:"T011",username:"afgambarov",   station:"204", zone:"HR & FM", name:"Atif Gambarov"},
+      {id:"T012",username:"nbaghirov",    station:"056", zone:"Operations", name:"Nurlan Baghirov"},
+      {id:"T013",username:"yntzoufras",   station:"005", zone:"Operations", name:"Yiannis Ntzoufras"},
+      {id:"T014",username:"emikayilov",   station:"091", zone:"Operations", name:"ELman Mikayilov"},
+      {id:"T015",username:"epiriyev",     station:"062", zone:"Operations", name:"Elmar Piriyev"},
+      {id:"T016",username:"mdutikova",    station:"037", zone:"Operations", name:"Maria Dutikova"},
+      {id:"T017",username:"mgoncalves",   station:"079", zone:"Operations", name:"Mauricio Goncalves"},
+      {id:"T018",username:"mquintanilla", station:"070", zone:"Operations", name:"Mariana Quintanilla"},
+      {id:"T019",username:"gmarino",      station:"248", zone:"Legal",      name:"Giandonato Marino"},
+      {id:"T020",username:"jgambarov",    station:"081", zone:"Operations", name:"Javid Gambarov"},
+      {id:"T021",username:"frusso",       station:"082", zone:"Operations", name:"Flora Russo"},
+      {id:"T022",username:"malmatalqah",  station:"083", zone:"Operations", name:"Mohammad Almatalqah"},
+      {id:"T023",username:"jdzios",       station:"077", zone:"Operations", name:"Joanna Dzios"},
+      {id:"T024",username:"cmontanha",    station:"072", zone:"Operations", name:"Camila Montanha"},
+      {id:"T025",username:"ttuomey",      station:"078", zone:"Operations", name:"Tim Tuomey"},
+      {id:"T026",username:"eegbuobi",     station:"063", zone:"Operations", name:"Emmanuel Egbuobi"},
+      {id:"T027",username:"mkaloeidas",   station:"ED",  zone:"Marketing & Communications", name:"Michael Knowles"}
     ];
 
+    // ===== Username-only entries (no numeric ID) =====
     const planningOnly = [
-      {username:"amalgheriri",name:"Alanound Alghariri",station:"099",zone:"Planning"},
-      {username:"c.mmruwaily",name:"Muhannad Alruwaily",station:"105",zone:"Planning"},
-      {username:"samadani",name:"Saud Madani",station:"106",zone:"Planning"},
-      {username:"atikhonova.c",name:"Anna Tikhonova",station:"117",zone:"Planning"},
-      {username:"dpolyakov.c",name:"Denis Bolyakov",station:"119",zone:"Planning"},
-      {username:"gmurphy.c",name:"Gillian Murphy",station:"120",zone:"Planning"},
-      {username:"aasulaimani",name:"Ammar Adnan Sulaimani",station:"131",zone:"Planning"},
-      {username:"ttahmazov.c",name:"Taymur Tahmazov",station:"132",zone:"Planning"},
-      {username:"aalsharif.c",name:"Abdulrhman Alsharif",station:"133",zone:"Planning"},
-      {username:"kramirez.c",name:"Keila Ramirez",station:"134",zone:"Planning"},
-      {username:"ikaldossary.c",name:"Ibrahim Aldossary",station:"205",zone:"HR & FM"},
-      {username:"akalturki.c",name:"Alanoud Alturki",station:"47",zone:"Operations"}
+      {username:"amalgheriri", name:"Alanound Alghariri",  station:"099", zone:"Planning"},
+      {username:"c.mmruwaily", name:"Muhannad Alruwaily",  station:"105", zone:"Planning"},
+      {username:"samadani",    name:"Saud Madani",         station:"106", zone:"Planning"},
+      {username:"atikhonova.c",name:"Anna Tikhonova",      station:"117", zone:"Planning"},
+      {username:"dpolyakov.c", name:"Denis Bolyakov",      station:"119", zone:"Planning"},
+      {username:"gmurphy.c",   name:"Gillian Murphy",      station:"120", zone:"Planning"},
+      {username:"aasulaimani", name:"Ammar Adnan Sulaimani", station:"131", zone:"Planning"},
+      {username:"ttahmazov.c", name:"Taymur Tahmazov",     station:"132", zone:"Planning"},
+      {username:"aalsharif.c", name:"Abdulrhman Alsharif", station:"133", zone:"Planning"},
+      {username:"kramirez.c",  name:"Keila Ramirez",       station:"134", zone:"Planning"},
+      {username:"ikaldossary.c", name:"Ibrahim Aldossary", station:"205", zone:"HR & FM"},
+      {username:"akalturki.c", name:"Alanoud Alturki",     station:"47",  zone:"Operations"}
     ];
 
-    const people = [...withId, ...planningOnly];
+    // ===== Extra ID-only rows from your early table (no username yet) =====
+    const idOnly = [
+      {id:"30", station:"Blank", zone:"Blank", name:"Saleh Mohammad Hussain"},
+      {id:"32", station:"Blank", zone:"Blank", name:"Albader Matuq Zamzami"},
+      {id:"34", station:"Blank", zone:"Blank", name:"Mohammed dhafer Alshahrani"},
+      {id:"38", station:"Blank", zone:"Blank", name:"Ziad Mohammed Arif"},
+      {id:"40", station:"Blank", zone:"Blank", name:"Obay Mahdi Alzowawi"},
+      {id:"42", station:"Blank", zone:"Blank", name:"Saud A. Alshawbaee"},
+      {id:"44", station:"Blank", zone:"Blank", name:"Abdullah A. Alshaikh"},
+      {id:"52", station:"166",   zone:"Commercial", name:"Feras Mohammednajeeb Sabano"}, // alt spelling
+      {id:"55", station:"Blank", zone:"Blank", name:"Abdulaziz Saleh Alharbi"},
+      {id:"69", station:"ED",    zone:"Commercial", name:"Essam Rashad Haroon"} // also in with username
+      // Add more here if you have IDs without usernames
+    ];
+
+    const people = [...withId, ...planningOnly, ...idOnly];
 
     function lookup() {
       const raw = document.getElementById("query").value.trim();
       const card = document.getElementById("result");
-      const map = document.getElementById("map");
-      const img = document.getElementById("mapImg");
+      const map  = document.getElementById("map");
+      const img  = document.getElementById("mapImg");
+
       const qUser = raw.toLowerCase();
-      const qId = raw.toUpperCase().replace(/\s+/g, "");
+      const qId   = raw.toUpperCase().replace(/\s+/g,"");
 
       if (!raw) {
         card.className = "card error";
@@ -134,10 +189,9 @@
         return;
       }
 
-      const emp = people.find(
-        (e) =>
-          (e.username && e.username.toLowerCase() === qUser) ||
-          (e.id && e.id.toUpperCase().replace(/\s+/g, "") === qId)
+      const emp = people.find(e =>
+        (e.username && e.username.toLowerCase() === qUser) ||
+        (e.id && e.id.toUpperCase().replace(/\s+/g,"") === qId)
       );
 
       if (!emp) {
@@ -148,18 +202,18 @@
         return;
       }
 
-      const zone = emp.zone?.trim() || "Blank";
-      const station = emp.station?.trim() || "Blank";
+      const zone    = (emp.zone||"Blank").trim();
+      const station = (emp.station||"Blank").trim();
 
       card.className = "card";
       card.innerHTML = `Welcome <strong>${emp.name}</strong><br>Your Zone is <strong>${zone}</strong><br>Your Station number is <strong>${station}</strong>`;
       card.style.display = "block";
 
-      // Simple direct image logic
-      let imgFile = "plan.jpg";
-      if (zone === "Operations") imgFile = "operations.jpg";
-      else if (zone === "Marketing & Communications") imgFile = "marketing.jpg";
-      else if (zone === "Finance") imgFile = "finance.jpg";
+      // Exact filename mapping (case-sensitive, same folder)
+      let imgFile = "Plan.jpg";
+      if (zone === "Operations") imgFile = "Operations.jpg";
+      else if (zone === "Marketing & Communications") imgFile = "Marketing.jpg";
+      else if (zone === "Finance") imgFile = "Finance.jpg";
       else if (zone === "Procurement") imgFile = "procurement.jpg";
 
       img.src = imgFile;
@@ -167,7 +221,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("query").addEventListener("keydown", (e) => {
+      document.getElementById("query").addEventListener("keydown", e => {
         if (e.key === "Enter") lookup();
       });
     });
